@@ -12,7 +12,7 @@ function getAllUsers(req, res) {
  * Crea un nuevo usuario si se proveen name y email válidos
  */
 function createUser(req, res) {
-  const { name, email } = req.body
+  const { name, email } = req.body;
 
   // Validación básica de entrada
   if (!name || !email) {

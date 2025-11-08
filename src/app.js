@@ -1,5 +1,5 @@
-const express = require("express");
-const userRoutes = require('./routes/user.routes')
+const express = require('express');
+const userRoutes = require('./routes/user.routes');
 
 const app = express(); // Crea una instancia de la aplicación Express
 
@@ -7,7 +7,7 @@ const app = express(); // Crea una instancia de la aplicación Express
 app.use(express.json());
 
 // Ruta base para los usuarios
-app.use("/api/users", userRoutes);
+app.use('/api/users', userRoutes);
 
 // Manejador de rutas no encontradas (404)
 app.use((req, res) => {
@@ -15,4 +15,4 @@ app.use((req, res) => {
 });
 
 // Exportamos app para poder usarla en tests o en un archivo de servidor separado
-module.exports = app
+module.exports = app;
