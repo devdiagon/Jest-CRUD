@@ -19,6 +19,13 @@ module.exports = [
       //    [ <que se devuelve>, <como se cumple> ]
       semi: ['error', 'always'],
       quotes: ['error', 'single'],
+      eqeqeq: ['error', 'always', ],
+      'no-console': ['error'],
+      'prefer-const': ['error'],
+      'no-var': ['error'],
+      'comma-dangle': ['error','never'],
+      'object-curly-spacing': ['error', 'always'],
+
     },
   },
 ]
