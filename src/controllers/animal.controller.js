@@ -9,7 +9,9 @@ function getAnimalById(req, res) {
   const animal = animals.find(a => a.id.toString() === id);
 
   if (!animal) {
-    return res.status(400);
+    return res.status(404).json({
+      message: 'Animal not found'
+    });
   }
 
   res.json(animal);

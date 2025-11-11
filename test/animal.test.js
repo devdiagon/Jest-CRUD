@@ -94,9 +94,28 @@ describe('Animals API', () => {
 
   });
 
-  // Prueba que el endopoint obtenga un animal con un id específico
+  // Prueba que el endopoint obtenga un animal con un id específico (id=4)
+  test('GET /api/animals/4 should return an animal', async () => {
+    const res = await request(app).get('/api/animals/4');
+
+    expect(res.statusCode).toBe(200);
+
+    expect(res.body).toEqual({
+      id: 4, 
+      name: "Bongo",
+      species: "Elefante africano",
+      age: 12,
+      gender: "Macho" });
+  });
 
   // Pureba que el endpoint falle al obtener un animal con un id que no existe
+  test('GET /api/animals/235r43 should fail', async () => {
+    const res = await request(app).get('/api/animals/235r43');
+
+    expect(res.statusCode).toBe(404);
+
+    expect(res.body).toHaveProperty('message', 'Animal not found');
+  });
 
   // Prueba que el endpoint modifique un animal (id=1)
   test('PUT /api/animals/1 should update all animal data', async () => {
