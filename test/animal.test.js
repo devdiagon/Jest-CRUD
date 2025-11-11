@@ -133,6 +133,19 @@ describe('Animals API', () => {
     expect(res.body.gender).toBe('Data');
   });
 
+  //Prueba que el endpoint falle al intentar actualziar un animal con un id que no existe
+  test('PUT /api/animals/453 should fail updating data', async () => {
+    const updatedAnimal = { name: 'New', species: 'Animal', age: 12, gender: 'Data' };
+
+    const res = await request(app).put('/api/animals/453').send(updatedAnimal);
+
+    expect(res.statusCode).toBe(404);
+
+    expect(res.body).toHaveProperty('message', 'Animal not found');
+  });
+
+  //Prueba que el endpoint falle al intentar actualziar un animal con payload incompleto
+
   // Prueba que un endpoint inválido sea rechazado
   test('GET /invalid should return an ', async () => {
     const res = await request(app).get('/invalid');
