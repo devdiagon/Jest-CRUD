@@ -101,11 +101,12 @@ describe('Animals API', () => {
     expect(res.statusCode).toBe(200);
 
     expect(res.body).toEqual({
-      id: 4, 
+      id: 4,
       name: "Bongo",
       species: "Elefante africano",
       age: 12,
-      gender: "Macho" });
+      gender: "Macho"
+    });
   });
 
   // Pureba que el endpoint falle al obtener un animal con un id que no existe
@@ -155,8 +156,22 @@ describe('Animals API', () => {
     expect(res.body).toHaveProperty('message', 'Name, species, age and gender are required');
   });
 
+  // Prueba que el endpoint elimine un animal especificado (id=8)
+  test('DELETE /api/animals/8 should delete the animal from the array', async () => {
+    const res = await request(app).delete('/api/animals/8');
+
+    expect(res.statusCode).toBe(204);
+
+    // Verificar de que de verdad se eliminó de la lista
+    const getRemoved = await request(app).get('/api/animals/8');
+
+    expect(getRemoved.statusCode).toBe(404);
+    
+    expect(getRemoved.body).toHaveProperty('message', 'Animal not found');
+  });
+
   // Prueba que el endpoint falle al intentar eliminar un animal que no existe
-  test('DELETE /api/animals/726', async () => {
+  test('DELETE /api/animals/726 should fail', async () => {
     const res = await request(app).delete('/api/animals/726');
 
     expect(res.statusCode).toBe(404);
