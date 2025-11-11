@@ -29,7 +29,7 @@ function createAnimal(req, res) {
     name,
     species,
     age,
-    gender,
+    gender
   };
 
   animals.push(newAnimal);
@@ -58,7 +58,7 @@ function updateAnimal(req, res) {
     name,
     species,
     age,
-    gender,
+    gender
   };
 
   animals[animalIndex] = updatedAnimal;
@@ -68,9 +68,6 @@ function updateAnimal(req, res) {
 
 function deleteAnimal(req, res) {
   const { id } = req.params;
-  const removedAnimal = animals.filter((animal)=>{
-   animal.id !=id
-  })
   const animalIndex = animals.findIndex(a => a.id.toString() === id);
 
   if (animalIndex === -1) {
