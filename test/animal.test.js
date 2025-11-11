@@ -117,11 +117,11 @@ describe('Animals API', () => {
     expect(res.body).toHaveProperty('message', 'Animal not found');
   });
 
-  // Prueba que el endpoint modifique un animal (id=1)
-  test('PUT /api/animals/1 should update all animal data', async () => {
+  // Prueba que el endpoint modifique un animal (id=6)
+  test('PUT /api/animals/6 should update all animal data', async () => {
     const updatedAnimal = { name: 'New', species: 'Animal', age: 12, gender: 'Data' };
 
-    const res = await request(app).put('/api/animals/1').send(updatedAnimal);
+    const res = await request(app).put('/api/animals/6').send(updatedAnimal);
 
     expect(res.statusCode).toBe(200);
 
