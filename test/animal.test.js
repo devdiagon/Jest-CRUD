@@ -145,6 +145,15 @@ describe('Animals API', () => {
   });
 
   //Prueba que el endpoint falle al intentar actualziar un animal con payload incompleto
+  test('PUT /api/animals/3 should fail updating data because of incomplete payload', async () => {
+    const updatedAnimal = { age: 12, gender: 'Incomplete' };
+
+    const res = await request(app).put('/api/animals/3').send(updatedAnimal);
+
+    expect(res.statusCode).toBe(400);
+
+    expect(res.body).toHaveProperty('message', 'Name, species, age and gender are required');
+  });
 
   // Prueba que un endpoint inválido sea rechazado
   test('GET /invalid should return an ', async () => {
