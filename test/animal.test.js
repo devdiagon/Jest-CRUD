@@ -155,6 +155,15 @@ describe('Animals API', () => {
     expect(res.body).toHaveProperty('message', 'Name, species, age and gender are required');
   });
 
+  // Prueba que el endpoint falle al intentar eliminar un animal que no existe
+  test('DELETE /api/animals/726', async () => {
+    const res = await request(app).delete('/api/animals/726');
+
+    expect(res.statusCode).toBe(404);
+
+    expect(res.body).toHaveProperty('message', 'Animal not found');
+  });
+
   // Prueba que un endpoint inválido sea rechazado
   test('GET /invalid should return an ', async () => {
     const res = await request(app).get('/invalid');
