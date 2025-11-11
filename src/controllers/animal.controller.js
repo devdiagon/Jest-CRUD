@@ -68,6 +68,9 @@ function updateAnimal(req, res) {
 
 function deleteAnimal(req, res) {
   const { id } = req.params;
+  const removedAnimal = animals.filter((animal)=>{
+   animal.id !=id
+  })
   const animalIndex = animals.findIndex(a => a.id.toString() === id);
 
   if (animalIndex === -1) {
@@ -78,7 +81,7 @@ function deleteAnimal(req, res) {
 
   animals.splice(animalIndex, 1);
 
-  res.status(204);
+  return res.sendStatus(204);
 }
 
 module.exports = { getAllAnimals, getAnimalById, createAnimal, updateAnimal, deleteAnimal };
