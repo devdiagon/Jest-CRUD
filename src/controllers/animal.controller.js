@@ -1,3 +1,5 @@
+const { randomUUID: uuidv4 } = require('crypto');
+
 const animals = [];
 
 function getAllAnimals(req, res) {
@@ -6,7 +8,7 @@ function getAllAnimals(req, res) {
 
 function getAnimalById(req, res) {
   const { id } = req.params;
-  const animal = animals.find(a => a.id.toString() === id);
+  const animal = animals.find(a => a.id === id);
 
   if (!animal) {
     return res.status(404).json({
@@ -18,14 +20,14 @@ function getAnimalById(req, res) {
 }
 
 function createAnimal(req, res) {
-  const { name, species, age, gender } = req.body;
+  const { id, name, species, age, gender } = req.body;
 
   if (!name || !species || !age || !gender) {
     return res.status(400).json({ message: 'Name, species, age and gender are required' });
   }
 
   const newAnimal = {
-    id: animals.length + 1,
+    id: id || uuidv4(),
     name,
     species,
     age,
@@ -39,7 +41,8 @@ function createAnimal(req, res) {
 
 function updateAnimal(req, res) {
   const { id } = req.params;
-  const animalIndex = animals.findIndex(a => a.id.toString() === id);
+
+  const animalIndex = animals.findIndex(a => a.id === id);
 
   if (animalIndex === -1) {
     return res.status(404).json({
@@ -54,7 +57,7 @@ function updateAnimal(req, res) {
   }
 
   const updatedAnimal = {
-    ...animals[animalIndex],
+    id,
     name,
     species,
     age,
@@ -63,12 +66,13 @@ function updateAnimal(req, res) {
 
   animals[animalIndex] = updatedAnimal;
 
-  res.json( animals[animalIndex] );
+  res.json(animals[animalIndex]);
 }
 
 function deleteAnimal(req, res) {
   const { id } = req.params;
-  const animalIndex = animals.findIndex(a => a.id.toString() === id);
+
+  const animalIndex = animals.findIndex(a => a.id === id);
 
   if (animalIndex === -1) {
     return res.status(404).json({
