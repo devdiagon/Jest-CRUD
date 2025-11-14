@@ -1,0 +1,88 @@
+const { randomUUID: uuidv4 } = require('crypto');
+
+const animals = [];
+
+function getAllAnimals(req, res) {
+  res.json(animals);
+}
+
+function getAnimalById(req, res) {
+  const { id } = req.params;
+  const animal = animals.find(a => a.id === id);
+
+  if (!animal) {
+    return res.status(404).json({
+      message: 'Animal not found'
+    });
+  }
+
+  res.json(animal);
+}
+
+function createAnimal(req, res) {
+  const { id, name, species, age, gender } = req.body;
+
+  if (!name || !species || !age || !gender) {
+    return res.status(400).json({ message: 'Name, species, age and gender are required' });
+  }
+
+  const newAnimal = {
+    id: id || uuidv4(),
+    name,
+    species,
+    age,
+    gender
+  };
+
+  animals.push(newAnimal);
+
+  res.status(201).json(newAnimal);
+}
+
+function updateAnimal(req, res) {
+  const { id } = req.params;
+
+  const animalIndex = animals.findIndex(a => a.id === id);
+
+  if (animalIndex === -1) {
+    return res.status(404).json({
+      message: 'Animal not found'
+    });
+  }
+
+  const { name, species, age, gender } = req.body;
+
+  if (!name || !species || !age || !gender) {
+    return res.status(400).json({ message: 'Name, species, age and gender are required' });
+  }
+
+  const updatedAnimal = {
+    id,
+    name,
+    species,
+    age,
+    gender
+  };
+
+  animals[animalIndex] = updatedAnimal;
+
+  res.json(animals[animalIndex]);
+}
+
+function deleteAnimal(req, res) {
+  const { id } = req.params;
+
+  const animalIndex = animals.findIndex(a => a.id === id);
+
+  if (animalIndex === -1) {
+    return res.status(404).json({
+      message: 'Animal not found'
+    });
+  }
+
+  animals.splice(animalIndex, 1);
+
+  return res.sendStatus(204);
+}
+
+module.exports = { getAllAnimals, getAnimalById, createAnimal, updateAnimal, deleteAnimal };

@@ -1,5 +1,5 @@
 // Simulación de una base de datos en memoria
-let users = [];
+const users = [];
 
 /**
  * Devuelve todos los usuarios almacenados
