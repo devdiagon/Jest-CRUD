@@ -3,10 +3,10 @@ const { getAllZookeepers, getZookeeperById, createZookeeper, updateZookeeper, de
 
 const router = express.Router();
 
-router.get('/zookeepers', getAllZookeepers);
-router.get('/zookeepers/:id', getZookeeperById);
-router.post('/zookeepers', createZookeeper);
-router.put('/zookeepers/:id', updateZookeeper);
-router.delete('/zookeepers/:id', deleteZookeeper);  
+router.get('/', getAllZookeepers);
+router.get('/:id', getZookeeperById);
+router.post('/', createZookeeper);
+router.put('/:id', updateZookeeper);
+router.delete('/:id', deleteZookeeper);  
 
 module.exports = router;
