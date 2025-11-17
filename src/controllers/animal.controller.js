@@ -1,23 +1,30 @@
-const { error } = require('console');
 const { randomUUID: uuidv4 } = require('crypto');
 
 const animals = [];
 
 function validatePayload(name, species, age, gender) {
-  if (!name || !species || !age || !gender) {
+  
+   if (name === undefined || name === null ||
+      species === undefined || species === null ||
+      age === undefined || age === null ||
+      gender === undefined || gender === null) {
     return { valid: false, message: 'Name, species, age and gender are required' };
   }
 
-  if(name === '') {
+  if(String(name).trim() === '') {
     return { valid: false, message: 'Name cannot be empty' };
   }
 
-  if(species === '') {
+  if(String(species).trim() === '') {
     return { valid: false, message: 'Species cannot be empty' };
   }
 
   if(age <= 0) {
     return { valid: false, message: 'Age must be a positive number' };
+  }
+
+  if(!Number.isInteger(age)){
+    return { valid: false, message: 'Age must be a whole numbers' };
   }
 
   if(gender !== 'Macho' && gender !== 'Hembra') {
