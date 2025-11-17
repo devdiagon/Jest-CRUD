@@ -2,6 +2,39 @@ const { randomUUID: uuidv4 } = require('crypto');
 
 const animals = [];
 
+function validatePayload(name, species, age, gender) {
+  
+   if (name === undefined || name === null ||
+      species === undefined || species === null ||
+      age === undefined || age === null ||
+      gender === undefined || gender === null) {
+    return { valid: false, message: 'Name, species, age and gender are required' };
+  }
+
+  if(String(name).trim() === '') {
+    return { valid: false, message: 'Name cannot be empty' };
+  }
+
+  if(String(species).trim() === '') {
+    return { valid: false, message: 'Species cannot be empty' };
+  }
+
+  if(age <= 0) {
+    return { valid: false, message: 'Age must be a positive number' };
+  }
+
+  if(!Number.isInteger(age)){
+    return { valid: false, message: 'Age must be a whole numbers' };
+  }
+
+  if(gender !== 'Macho' && gender !== 'Hembra') {
+    return { valid: false, message: 'Gender can only be Macho or Hembra' };
+  }
+
+  return { valid: true, message: '' };
+
+}
+
 function getAllAnimals(req, res) {
   res.json(animals);
 }
@@ -22,8 +55,10 @@ function getAnimalById(req, res) {
 function createAnimal(req, res) {
   const { id, name, species, age, gender } = req.body;
 
-  if (!name || !species || !age || !gender) {
-    return res.status(400).json({ message: 'Name, species, age and gender are required' });
+  const validation = validatePayload(name, species, age, gender);
+
+  if (!validation.valid) {
+    return res.status(400).json({ message: validation.message });
   }
 
   const newAnimal = {
@@ -52,8 +87,10 @@ function updateAnimal(req, res) {
 
   const { name, species, age, gender } = req.body;
 
-  if (!name || !species || !age || !gender) {
-    return res.status(400).json({ message: 'Name, species, age and gender are required' });
+  const validation = validatePayload(name, species, age, gender);
+
+  if (!validation.valid) {
+    return res.status(400).json({ message: validation.message });
   }
 
   const updatedAnimal = {
