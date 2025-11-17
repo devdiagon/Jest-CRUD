@@ -36,6 +36,56 @@ describe('Animals API', () => {
     expect(res.body).toHaveProperty('message', 'Name, species, age and gender are required');
   });
 
+  // Prueba POST que verifica que falle si el nombre está en blanco
+  test('POST /api/animals should fail if name is empty', async () => {
+    const invalidPayload = { name: '   ', species: 'Algo', age: 0, gender: 'Macho' };
+    const res = await request(app).post('/api/animals').send(invalidPayload);
+
+    expect(res.statusCode).toBe(400);
+
+    expect(res.body).toHaveProperty('message', 'Name cannot be empty');
+  });
+
+  // Prueba POST que verifica que falle si la especie está en blanco
+  test('POST /api/animals should fail if species is empty', async () => {
+    const invalidPayload = { name: 'Algo', species: '   ', age: 0, gender: 'Macho' };
+    const res = await request(app).post('/api/animals').send(invalidPayload);
+
+    expect(res.statusCode).toBe(400);
+
+    expect(res.body).toHaveProperty('message', 'Species cannot be empty');
+  });
+
+  // Prueba POST que verifica que falle si la edad es menor o igual a cero
+  test('POST /api/animals should fail if age is not greather than zero', async () => {
+    const invalidPayload = { name: 'Algo', species: 'Algo', age: 0, gender: 'Macho' };
+    const res = await request(app).post('/api/animals').send(invalidPayload);
+
+    expect(res.statusCode).toBe(400);
+
+    expect(res.body).toHaveProperty('message', 'Age must be a positive number');
+  });
+
+  // Prueba POST que verifica que falle si la edad es un flotante
+  test('POST /api/animals should fail if age is not an integer', async () => {
+    const invalidPayload = { name: 'Algo', species: 'Algo', age: 12.4, gender: 'Macho' };
+    const res = await request(app).post('/api/animals').send(invalidPayload);
+
+    expect(res.statusCode).toBe(400);
+
+    expect(res.body).toHaveProperty('message', 'Age must be a whole numbers');
+  });
+
+  // Prueba POST que verifica que falle si la el género es distinto de Macho o Hembra
+  test('POST /api/animals should fail if gender is not Macho or Hembra', async () => {
+    const invalidPayload = { name: 'Algo', species: 'Algo', age: 12, gender: 'Algo' };
+    const res = await request(app).post('/api/animals').send(invalidPayload);
+
+    expect(res.statusCode).toBe(400);
+
+    expect(res.body).toHaveProperty('message', 'Gender can only be Macho or Hembra');
+  });
+
   // Prueba que el endpoint agregue varios animales al array
   test('POST several animals and verify GET returns all of them at /api/animals route', async () => {
 
