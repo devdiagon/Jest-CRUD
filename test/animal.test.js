@@ -12,7 +12,7 @@ describe('Animals API', () => {
   });
 
   // Prueba POST que crea un animal correctamente
-  test('POST /api/animals should create a new user', async () => {
+  test('POST /api/animals should create a new animal', async () => {
     const newAnimal = { name: 'Maya', species: 'Jirafa', age: 9, gender: 'Hembra' };
     const res = await request(app).post('/api/animals').send(newAnimal);
 
@@ -121,7 +121,7 @@ describe('Animals API', () => {
 
   // Prueba que el endpoint modifique un animal (id=f91a4207-12ea-4ce2-9956-5aa1cc587a1a)
   test('PUT /api/animals/<existing UUID> should update all animal data', async () => {
-    const updatedAnimal = { name: 'New', species: 'Animal', age: 12, gender: 'Data' };
+    const updatedAnimal = { name: 'New', species: 'Animal Data', age: 12, gender: 'Macho' };
 
     const res = await request(app).put('/api/animals/f91a4207-12ea-4ce2-9956-5aa1cc587a1a').send(updatedAnimal);
 
@@ -130,9 +130,9 @@ describe('Animals API', () => {
     // Verificación
     expect(res.body).toHaveProperty('id');
     expect(res.body.name).toBe('New');
-    expect(res.body.species).toBe('Animal');
+    expect(res.body.species).toBe('Animal Data');
     expect(res.body.age).toBe(12);
-    expect(res.body.gender).toBe('Data');
+    expect(res.body.gender).toBe('Macho');
   });
 
   //Prueba que el endpoint falle al intentar actualziar un animal con un id que no existe
