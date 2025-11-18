@@ -23,7 +23,7 @@ const validateAnimalPayload = (name, species, age, gender) => {
     return { valid: false, message: 'Age must be a whole numbers' };
   }
 
-  if(gender !== 'Macho' && gender !== 'Hembra') {
+  if( String(gender).trim() !== 'Macho' && String(gender).trim() !== 'Hembra') {
     return { valid: false, message: 'Gender can only be Macho or Hembra' };
   }
 

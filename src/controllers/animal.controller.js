@@ -31,10 +31,10 @@ function createAnimal(req, res) {
 
   const newAnimal = {
     id: id || uuidv4(),
-    name,
-    species,
+    name: String(name).trim(),
+    species: String(species).trim(),
     age,
-    gender
+    gender: String(gender).trim(),
   };
 
   animals.push(newAnimal);
@@ -63,10 +63,10 @@ function updateAnimal(req, res) {
 
   const updatedAnimal = {
     id,
-    name,
-    species,
+    name: String(name).trim(),
+    species: String(species).trim(),
     age,
-    gender
+    gender: String(gender).trim(),
   };
 
   animals[animalIndex] = updatedAnimal;
