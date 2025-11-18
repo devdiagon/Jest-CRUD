@@ -5,3 +5,4 @@ coverage/
 .idea/
 
 .eslintcache
+swagger_output.json

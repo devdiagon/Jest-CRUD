@@ -11,14 +11,18 @@
     "lint": "eslint",
     "lint-fix": "eslint --fix",
     "commit": "git-cz",
-    "commit:all": "git add . && git-cz"
+    "commit:all": "git add . && git-cz",
+    "swagger-autogen": "node swagger.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.5",

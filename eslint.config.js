@@ -2,6 +2,10 @@ const js = require('@eslint/js');
 
 module.exports = [
   {
+    // Excluir archivos de coverage
+    ignores: ['coverage/**'],
+  },
+  {
     // Configuración para archivos que se van a validar
     files: ['src/**/*.js'],
 
@@ -9,6 +13,9 @@ module.exports = [
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: 'commonjs',
+      globals: {
+        __dirname: 'readonly',
+      },
     },
 
     // Reglas que eslint aplicará
@@ -27,5 +34,6 @@ module.exports = [
       'object-curly-spacing': ['error', 'always'],
 
     },
+    
   },
 ]
