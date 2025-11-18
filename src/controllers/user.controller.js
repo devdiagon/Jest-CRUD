@@ -1,36 +1,89 @@
-// Simulación de una base de datos en memoria
+const { randomUUID: uuidv4 } = require('crypto');
+const { validateUserPayload } = require('../utils/user.validation');
+
 const users = [];
 
-/**
- * Devuelve todos los usuarios almacenados
- */
-function getAllUsers(req, res) {
+const getAllUsers = (req, res) => {
   res.json(users);
-}
+};
 
-/**
- * Crea un nuevo usuario si se proveen name y email válidos
- */
-function createUser(req, res) {
-  const { name, email } = req.body;
+const getUserById = (req, res) => {
+  const { id } = req.params;
+  const user = users.find(u => u.id === id);
 
-  // Validación básica de entrada
-  if (!name || !email) {
-    return res.status(400).json({ message: 'Name and email are required' });
+  if (!user) {
+    return res.status(404).json({
+      message: 'User not found'
+    });
   }
 
-  // Creamos un objeto usuario
+  res.json(user);
+};
+
+const createUser = (req, res) => {
+  const { id, name, email } = req.body;
+
+  const validation = validateUserPayload(name, email);
+
+  if (!validation.valid) {
+    return res.status(400).json({ message: validation.message });
+  }
+
   const newUser = {
-    id: Date.now(), // ID simulado
-    name,
-    email
+    id: id || uuidv4(),
+    name: String(name).trim(),
+    email: String(email).trim()
   };
 
-  // Lo añadimos al arreglo de usuarios
   users.push(newUser);
 
-  // Respondemos con el usuario creado
   res.status(201).json(newUser);
-}
+};
 
-module.exports = { getAllUsers, createUser };
+const updateUser = (req, res) => {
+  const { id } = req.params;
+
+  const userIndex = users.findIndex(u => u.id === id);
+
+  if (userIndex === -1) {
+    return res.status(404).json({
+      message: 'User not found'
+    });
+  }
+
+  const { name, email } = req.body;
+
+  const validation = validateUserPayload(name, email);
+
+  if (!validation.valid) {
+    return res.status(400).json({ message: validation.message });
+  }
+
+  const updatedUser = {
+    id,
+    name: String(name).trim(),
+    email: String(email).trim()
+  };
+
+  users[userIndex] = updatedUser;
+
+  res.json(users[userIndex]);
+};
+
+const deleteUser = (req, res) => {
+  const { id } = req.params;
+
+  const userIndex = users.findIndex(u => u.id === id);
+
+  if (userIndex === -1) {
+    return res.status(404).json({
+      message: 'User not found'
+    });
+  }
+
+  users.splice(userIndex, 1);
+
+  return res.sendStatus(204);
+};
+
+module.exports = { getAllUsers, getUserById, createUser, updateUser, deleteUser };
