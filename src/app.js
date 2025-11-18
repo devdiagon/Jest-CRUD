@@ -1,4 +1,8 @@
+const __dirname = path.resolve();
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const fs = require('fs');
+const path = require('path');
 const userRoutes = require('./routes/user.routes');
 const zookeeperRoutes = require('./routes/zookeeper.routes');
 const habitatRoutes = require('./routes/habitat.routes');
@@ -8,6 +12,13 @@ const app = express(); // Crea una instancia de la aplicación Express
 
 // Middleware para parsear JSON del cuerpo de las solicitudes
 app.use(express.json());
+
+// Swagger documentation setup
+const swaggerFilePath = path.join(__dirname, '../swagger_output.json');
+if (fs.existsSync(swaggerFilePath)) {
+  const swaggerFile = require(swaggerFilePath);
+  app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+}
 
 // Ruta base para los usuarios
 app.use('/api/users', userRoutes);
