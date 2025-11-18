@@ -1,12 +1,12 @@
 const express = require('express');
-const { getAllUsers, createUser } = require('../controllers/user.controller');
+const { getAllUsers, getUserById, createUser, updateUser, deleteUser } = require('../controllers/user.controller');
 
 const router = express.Router();
 
-// Ruta GET para obtener todos los usuarios
 router.get('/', getAllUsers);
-
-// Ruta POST para crear un nuevo usuario
+router.get('/:id', getUserById);
 router.post('/', createUser);
+router.put('/:id', updateUser);
+router.delete('/:id', deleteUser);
 
 module.exports = router;
