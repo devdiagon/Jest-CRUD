@@ -29,6 +29,6 @@ const validateAnimalPayload = (name, species, age, gender) => {
 
   return { valid: true, message: '' };
 
-}
+};
 
 module.exports = { validateAnimalPayload };

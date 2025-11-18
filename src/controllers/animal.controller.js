@@ -34,7 +34,7 @@ function createAnimal(req, res) {
     name: String(name).trim(),
     species: String(species).trim(),
     age,
-    gender: String(gender).trim(),
+    gender: String(gender).trim()
   };
 
   animals.push(newAnimal);
@@ -66,7 +66,7 @@ function updateAnimal(req, res) {
     name: String(name).trim(),
     species: String(species).trim(),
     age,
-    gender: String(gender).trim(),
+    gender: String(gender).trim()
   };
 
   animals[animalIndex] = updatedAnimal;
