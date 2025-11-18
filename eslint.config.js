@@ -13,6 +13,9 @@ module.exports = [
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: 'commonjs',
+      globals: {
+        __dirname: 'readonly',
+      },
     },
 
     // Reglas que eslint aplicará

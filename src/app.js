@@ -1,4 +1,3 @@
-const __dirname = path.resolve();
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const fs = require('fs');
