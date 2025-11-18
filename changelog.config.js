@@ -6,7 +6,7 @@ module.exports = {
     'animals',
     'habitats',
     'animals',
-    'caretakers',
+    'zookeepers',
   ],
   maxMessageLength: 100,
 }
